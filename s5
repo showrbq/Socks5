@@ -1,34 +1,35 @@
 #!/bin/bash
 export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-resName="wyx176"
+resName="showrbq"
 versionFile=/etc/opt/ss5/version.txt
 
 checkup(){
-newVersion=`curl -s -L  https://raw.githubusercontent.com/${resName}/Socks5/master/version.txt`
-oldVersion=`cat $versionFile`
-if [ $newVersion = $oldVersion ] ;then
-echo "V"${oldVersion}
-else
-echo "有新版本V"$newVersion
-fi
+    newVersion=`curl -s -L  https://raw.githubusercontent.com/${resName}/Socks5/master/version.txt`
+    oldVersion=`cat $versionFile`
+    if [ $newVersion = $oldVersion ] ;then
+    echo "V"${oldVersion}
+    else
+    echo "New Version Found: V"$newVersion
+    fi
 }
 clear
-echo -e "欢迎使用SOCKS5 \033[32m$(checkup)\033[0m\n"
-echo "1.服务控制"
-echo "2.用户管理"
-echo "0.退出面板"
+
+echo -e "SOCKS5 \033[32m$(checkup)\033[0m\n"
+echo "1.Service Control"
+echo "2.User Setting"
+echo "0.Exit"
 while :; do echo
-	read -p "请选择： " choice
+	read -p "Enter: " choice
 	if [[ ! $choice =~ ^[0-2]$ ]]; then
-		echo "输入错误! 请输入正确的数字!"
+		echo "Unknown choice!"
 	else
-		break	
+		break
 	fi
 done
 
 if [[ $choice == 0 ]];then
 	exit 0
-fi	
+fi
 if [[ $choice == 1 ]];then
 	clear
 	bash /etc/opt/ss5/service.sh
@@ -37,5 +38,3 @@ if [[ $choice == 2 ]];then
 	clear
 	bash /etc/opt/ss5/user.sh
 fi
-
-
